@@ -28,5 +28,12 @@ public class StudentServiceImpl implements StudentService {
 		return q.getResultList();
 	}
 
+	@Override
+	public Collection<Student> getStudentsByDepartment(String departemnt) {
+		TypedQuery<Student> q = em.createQuery("FROM Student student WHERE student.dept = :dept", Student.class);
+		q.setParameter("dept", departemnt);
+		return q.getResultList();
+	}
+
 
 }
