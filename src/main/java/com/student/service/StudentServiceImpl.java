@@ -31,7 +31,7 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	public Collection<Student> getStudentsByDepartment(String departemnt) {
-		return studentRepository.findByDept(departemnt);
+		return studentRepository.getByDept(departemnt);
 	}
 
 
