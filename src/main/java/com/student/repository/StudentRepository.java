@@ -8,7 +8,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import java.util.Collection;
 
-@RepositoryRestResource(collectionResourceRel = "student", path = "enrollments")
+@RepositoryRestResource(collectionResourceRel = "student", path = "enrollments", excerptProjection = Person.class)
 public interface StudentRepository extends JpaRepository<Student, Long> {
     @Query("SELECT student FROM Student student WHERE student.dept = :dept")
     public Collection<Student> getByDept(@Param("dept") String department);
