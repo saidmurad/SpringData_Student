@@ -7,9 +7,11 @@ import java.util.stream.Collectors;
 import javax.inject.Inject;
 import javax.persistence.TypedQuery;
 
+import com.student.exception.MyException;
 import com.student.repository.StudentRepository;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import com.student.core.Student;
@@ -51,8 +53,12 @@ public class StudentController {
 	}
 
 	@PostMapping
-	public ResponseEntity<String> add(@RequestBody Student student) {
+	@Transactional(rollbackFor = MyException.class)
+	public ResponseEntity<String> add(@RequestBody Student student) throws MyException {
 		studentRepository.save(student);
+		if(student.getFees() > 200.00) {
+			throw new MyException("Blow Up");
+		}
 		return ResponseEntity.accepted().header("location", "/student/" + student.getId()).build();
 	}
 	 

@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 
@@ -12,4 +14,7 @@ import java.util.Collection;
 public interface StudentRepository extends JpaRepository<Student, Long> {
     @Query("SELECT student FROM Student student WHERE student.dept = :dept")
     public Collection<Student> getByDept(@Param("dept") String department);
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    Student save(Student entity);
 }
